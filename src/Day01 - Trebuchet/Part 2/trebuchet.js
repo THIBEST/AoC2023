@@ -56,10 +56,8 @@ var Trebuchet = /** @class */ (function () {
                 }
             }
         }
-        var firstValue = numbers.length > 0 ? numbers[0] : 0;
-        var lastValue = numbers.length > 1 ? numbers[numbers.length - 1] : firstValue;
-        var calibrationValue = parseInt("".concat(firstValue).concat(lastValue), 10);
-        console.log("line: ".concat(line), "Calibration value: ".concat(calibrationValue));
+        var firstValue = numbers[0] || 0;
+        var lastValue = numbers[numbers.length - 1] || firstValue;
         return parseInt("".concat(firstValue).concat(lastValue), 10);
     };
     return Trebuchet;
