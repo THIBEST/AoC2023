@@ -8,6 +8,12 @@ var CubeConundrum = /** @class */ (function () {
         this.maxGreen = maxGreen;
         this.maxBlue = maxBlue;
     }
+    /**
+     * Calculates the sum of the indices of the lines in the input text file
+     * where a game is possible.
+     *
+     * @return {number} The sum of the indices of the lines where a game is possible.
+     */
     CubeConundrum.prototype.getIdSumPossibleGames = function () {
         var _this = this;
         var filePath = (0, path_1.join)(__dirname, "../input.txt");
@@ -24,6 +30,12 @@ var CubeConundrum = /** @class */ (function () {
         }, 0);
         return idSumPossibleGames;
     };
+    /**
+     * Splits the given line by ":" and returns an array of sets.
+     *
+     * @param {string} line - The line to process.
+     * @return {string[]} An array of sets.
+     */
     CubeConundrum.prototype.getSets = function (line) {
         return line
             .split(":")[1]
@@ -31,6 +43,12 @@ var CubeConundrum = /** @class */ (function () {
             .replace(/;\s/g, ";")
             .split(";");
     };
+    /**
+     * Checks if a game is possible based on the given sets.
+     *
+     * @param {string[]} sets - An array of sets containing numbers and colors.
+     * @return {boolean} Returns true if the game is possible, false otherwise.
+     */
     CubeConundrum.prototype.isGamePossible = function (sets) {
         for (var _i = 0, sets_1 = sets; _i < sets_1.length; _i++) {
             var set = sets_1[_i];
