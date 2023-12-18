@@ -15,27 +15,28 @@ var GearRatios = /** @class */ (function () {
      */
     GearRatios.prototype.getSumOfPartnumbers = function () {
         var sumOfPartnumbers = 0;
-        for (var lineIndex = 0; lineIndex < this.dataLines.length; lineIndex++) {
-            var line = this.dataLines[lineIndex];
-            for (var charIndex = 0; charIndex < line.length; charIndex++) {
-                var parsedNumber = parseInt(line[charIndex]);
-                if (isNaN(parsedNumber)) {
-                    continue;
+        for (var _i = 0, _a = this.dataLines; _i < _a.length; _i++) {
+            var line = _a[_i];
+            var number = '';
+            var isNumber = false;
+            for (var _b = 0, line_1 = line; _b < line_1.length; _b++) {
+                var char = line_1[_b];
+                if (!isNaN(parseInt(char))) {
+                    number += char;
+                    isNumber = true;
                 }
-                var numberIndex = charIndex;
-                var number = parsedNumber;
-                while (numberIndex + 1 < line.length &&
-                    !isNaN(parseInt(line[numberIndex + 1]))) {
-                    numberIndex++;
-                    number = number * 10 + parseInt(line[numberIndex]);
-                }
-                for (var t = charIndex; t <= numberIndex; t++) {
-                    if (this.checkSides(lineIndex, t)) {
-                        sumOfPartnumbers += number;
-                        break;
+                else if (isNumber) {
+                    if (this.checkSides(this.dataLines.indexOf(line), line.indexOf(char) - 1)) {
+                        sumOfPartnumbers += parseInt(number);
                     }
+                    number = '';
+                    isNumber = false;
                 }
-                charIndex = numberIndex;
+            }
+            if (isNumber) {
+                if (this.checkSides(this.dataLines.indexOf(line), line.length - 1)) {
+                    sumOfPartnumbers += parseInt(number);
+                }
             }
         }
         return sumOfPartnumbers;
@@ -91,12 +92,3 @@ var GearRatios = /** @class */ (function () {
 var gearRatios = new GearRatios();
 var sumOfPartnumbers = gearRatios.getSumOfPartnumbers();
 console.log("TOTAL: ", sumOfPartnumbers);
-function part1RegEx() {
-    var _a;
-    var filePath = (0, path_1.join)(__dirname, "../input.txt");
-    var input = (0, fs_1.readFileSync)(filePath, "utf8");
-    var sum = (_a = input
-        .match(/(\d*(?<=[^\d.\n\r].{140,142})\d+)|(\d+(?=.{140,142}[^\d.\n\r])\d*)|((?<=[^\d.\n\r])\d+)|(\d+(?=[^\d.\n\r]))/gs)) === null || _a === void 0 ? void 0 : _a.reduce(function (p, c) { return p + +c; }, 0);
-    console.log("Should have been: ", sum);
-}
-part1RegEx();
